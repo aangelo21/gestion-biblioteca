@@ -9,8 +9,9 @@ public class ConexionDB {
     public static Connection conectar() {
         Connection conn = null;
         try {
+            String url = "C:\\Users\\Angelo\\Desktop\\code\\gestion-biblioteca\\biblioteca.db";
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:biblioteca.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:" + url);
             System.out.println("Conexión a la base de datos establecida");
         } catch (SQLException e) {
             System.out.println("Error al conectar a la base de datos");
@@ -22,7 +23,7 @@ public class ConexionDB {
 
     public static void crearTablas(Connection conn) {
         String sqlAutor = "create table if not exists Autor (" +
-                "id_persona INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "id_autor INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "nombre TEXT NOT NULL," +
                 "nacionalidad TEXT NOT NULL);";
 
@@ -36,8 +37,8 @@ public class ConexionDB {
                 "anio_publicacion INTEGER NOT NULL," +
                 "autor_id NUMBER NOT NULL," +
                 "categoria_id NUMBER NOT NULL," +
-                "FOREIGN KEY (autor_id) REFERENCES Autor(id)," +
-                "FOREIGN KEY (categoria_id) REFERENCES Categoria(id));";
+                "FOREIGN KEY (autor_id) REFERENCES Autor(id_autor)," +
+                "FOREIGN KEY (categoria_id) REFERENCES Categoria(id_categoria));";
 
         try (Statement stmt = conn.createStatement()) {
             try {
