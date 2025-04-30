@@ -9,13 +9,16 @@ public class BibliotecaApp extends JFrame {
 
     private void initcomponents() {
         setTitle("Biblioteca");
-        setSize(500,500);
+        setSize(800,600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JTabbedPane menu = new JTabbedPane();
         menu.addTab("Autor", new AutorVista());
+        menu.addTab("Categoría", new CategoriaVista());
+        menu.addTab("Libro", new LibroVista());
 
         add(menu);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 }

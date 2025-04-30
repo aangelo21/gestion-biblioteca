@@ -9,9 +9,8 @@ public class ConexionDB {
     public static Connection conectar() {
         Connection conn = null;
         try {
-            String url = "C:\\Users\\Angelo\\Desktop\\code\\gestion-biblioteca\\biblioteca.db";
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:" + url);
+            conn = DriverManager.getConnection("jdbc:sqlite:biblioteca.db");
             System.out.println("Conexión a la base de datos establecida");
         } catch (SQLException e) {
             System.out.println("Error al conectar a la base de datos");

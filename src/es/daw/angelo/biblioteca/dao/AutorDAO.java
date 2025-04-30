@@ -28,11 +28,11 @@ public class AutorDAO {
 
     public static void borrarAutor(Autor autor) {
         Connection conn = ConexionDB.conectar();
-        String borrarAutor = "DELETE FROM AUTOR WHERE NOMBRE LIKE '?';";
+        String borrarAutor = "DELETE FROM Autor WHERE id_autor = ?;";
         PreparedStatement stmt;
         try {
             stmt = conn.prepareStatement(borrarAutor);
-            stmt.setString(1, autor.getNombre());
+            stmt.setInt(1, autor.getId_autor());
             int resultado = stmt.executeUpdate();
             if (resultado == 1) {
                 System.out.println("Se ha eliminado el registro correctamente");
@@ -73,9 +73,11 @@ public class AutorDAO {
             ResultSet rs = stmt.executeQuery(leerAutores);
             boolean hayRegistros = false;
             while (rs.next()) {
-                listaAutores.add(new Autor(rs.getInt("id"),
-                        rs.getString("nombre"),
-                        rs.getString("nacionalidad")));
+                listaAutores.add(new Autor(
+                    rs.getInt("id_autor"), 
+                    rs.getString("nombre"),
+                    rs.getString("nacionalidad")
+                ));
                 hayRegistros = true;
             }
             if (hayRegistros) {
@@ -85,6 +87,15 @@ public class AutorDAO {
             }
         } catch (SQLException e) {
             System.out.println("Error al preparar la query");
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listaAutores;
     }
